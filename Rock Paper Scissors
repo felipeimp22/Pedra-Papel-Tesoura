@@ -1,0 +1,186 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace PPT
+{
+    public partial class Form1 : Form
+    {
+
+        resultado ganhador = new resultado();
+        enum resultado { player, cpu, empate }
+        int playern;
+        int cpun;
+        enum opcoes
+        {
+            Pedra = 0, Papel = 1, Tesoura = 2
+        };
+        opcoes player1 = new opcoes();
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+
+        private void perdra_Click(object sender, EventArgs e)
+        {
+            player1 = opcoes.Pedra;
+            Escolhaplayer("Pedra");
+            play.Enabled = true;
+           
+        }
+
+        private void papel_Click(object sender, EventArgs e)
+        {
+            player1 = opcoes.Papel;
+            Escolhaplayer("Papel");
+            play.Enabled = true;
+            
+        }
+        private void tesoura_Click(object sender, EventArgs e)
+        {
+            player1 = opcoes.Tesoura;
+            Escolhaplayer("Tesoura");
+            play.Enabled = true;
+            
+        }
+
+        private void player_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cpu_Enter(object sender, EventArgs e)
+        {
+
+        }
+        public void Escolhaplayer(string tipo)
+        {
+
+            player.BackgroundImage = Image.FromFile(@"C:\testando\" + tipo + ".png");
+            switch (tipo)
+            {
+                case "Pedra":
+                    playern = 0;
+                    break;
+                case "Papel":
+                    playern = 1;
+                    break;
+                case "Tesoura":
+                    playern = 2;
+                    break;
+
+
+            }
+
+
+
+
+        }
+
+        private void play_Click(object sender, EventArgs e)
+        {
+            cpu1();
+            Verificar();
+
+        }
+        public void cpu1()
+        {
+            var tipo = "";
+
+            Random r = new Random();
+            cpun = r.Next(3);
+            switch (cpun) {
+                case 0:
+                    tipo = "Pedra";
+                    break;
+                case 1:
+                    tipo = "Papel";
+                    break;
+                case 2:
+                    tipo = "Tesoura";
+                    break;
+
+
+
+            }
+            cpu.BackgroundImage = Image.FromFile(@"C:\testando\" + tipo + ".png");
+
+
+            
+
+
+        }
+        void Verificar()
+
+        {
+            switch (player1)
+
+            {
+                case opcoes.Pedra:
+                    if (cpun == 0)
+                        ganhador = resultado.empate;
+
+                    else if (cpun == 1)
+                        ganhador = resultado.cpu;
+
+                    else if (cpun == 2)
+                        ganhador = resultado.player;
+                    break;
+
+                case opcoes.Papel:
+                    if (cpun == 0)
+                        ganhador = resultado.player;
+                    else if (cpun == 1)
+                        ganhador = resultado.empate;
+                    else if (cpun == 2)
+                        ganhador = resultado.cpu;
+                    break;
+                case opcoes.Tesoura:
+                    if (cpun == 0)
+                        ganhador = resultado.cpu;
+                    else if (cpun == 1)
+                        ganhador = resultado.player;
+                    else if (cpun == 2)
+                        ganhador = resultado.empate;
+                    break;
+
+
+            }
+            if (ganhador == resultado.player)
+            {
+                placar.BackColor = Color.Green;
+                label3.Text = (int.Parse(label3.Text) + 1).ToString();
+            }
+
+            else if (ganhador == resultado.cpu)
+            {
+                placar.BackColor = Color.Red;
+                label4.Text = (int.Parse(label4.Text) + 1).ToString();
+            }
+            else if (ganhador == resultado.empate)
+            {
+                placar.BackColor = Color.Yellow;
+
+            }
+           
+        }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label4_Click(object sender, EventArgs e)
+        {
+
+        }
+    }
+}
+
